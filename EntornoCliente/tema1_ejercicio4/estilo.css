@@ -1,0 +1,50 @@
+#titulo {
+
+    color: rgb(13, 33, 123);
+
+}
+
+#mensaje {
+    color: rgb(13, 121, 123);
+    font-size: 20px;
+    text-align: left;
+}
+
+#boton {
+    background-color: rgb(73, 125, 98);
+    color: rgb(249, 250, 249);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#boton:hover {
+    background-color: rgb(84, 95, 143);
+    color: rgb(239, 235, 235);
+}
+
+
+#fondo {
+    background-color: #823e6f;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#boton2 {
+    background-color: #0fa4b5;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#boton3 {
+    background-color: #0fa4b5;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

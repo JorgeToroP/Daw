@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #888a90;
+    text-align: center;
+    padding: 30px;
+}
+
+#contenedor{
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap:30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
+
+}
+
+button {
+    background-color: #e2e5ec;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#Lista-productos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.producto {
+    background-color: rgb(14, 58, 17);
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px;
+    box-shadow: 0 2px 4px #f0f2f1;
+}
+
+.precio {
+    color: #f7f9f8;
+    font-weight: bold;
+}
+
+#totalPagar {
+
+    color: aliceblue;
+    background-color: #757679;
+    box-shadow: 0 2px 8px #f0f2f1;
+    width: 300px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    
+}
+
+#catalogo {
+    color: aliceblue;
+    background-color: #252933;
+    box-shadow: 0 2px 8px #f0f2f1;
+    padding: 20px 20px;
+    border-radius: 100px;
+}
+
+#total_carrito {
+    color: aliceblue;
+    background-color: #1c4fbd;
+    box-shadow: 0 2px 8px #f0f2f1;
+    padding: 20px 20px;
+    border-radius: 100px;
+}
+
+#resumen-carrito {
+    color: aliceblue;
+    background-color: #0e4622;
+    width: 300px;
+    padding: 15px 15px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+  /*  margin-bottom: auto;*/
+}
+
+.item-resumen {
+    background-color: #86878b;
+    padding: 10px 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}

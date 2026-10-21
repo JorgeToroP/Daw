@@ -1,0 +1,31 @@
+#div {
+    margin-top: auto;
+    border-top: 10px;
+    padding-top: 10px;
+
+    color: rgb(60, 60, 169);
+    font-display: auto;
+    font-size: large;
+    font-style: initial;
+
+
+}
+
+#lista {
+    font-style: italic;
+    flex-direction: column;
+    margin-top: auto;
+    border-top: 10px;
+    padding-top: 10px;
+
+    color: rgb(60, 60, 169);
+    font-display: auto;
+    font-size: large;
+    font-style: initial;
+
+}
+
+#body {
+    background-color: rgb(173, 124, 64);
+    color: bisque;
+}

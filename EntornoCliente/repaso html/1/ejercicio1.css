@@ -1,0 +1,57 @@
+#titulo {
+  color: rgb(253, 253, 255);
+  background-color: rgb(147, 85, 138);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+#mensaje {
+  color: rgb(249, 246, 246);
+  font-size: 20px;
+  text-align: left;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgb(75, 123, 75);
+}
+#boton {
+  background-color: rgb(238, 2, 2);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+body {
+  background-color: #302c45;
+}
+li {
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  text-align: left;
+  background-color: rgb(75, 123, 75);
+  border-radius: 10px;
+}
+footer {
+  background-color: rgb(75, 123, 75);
+  color: rgb(255, 255, 255);
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+#boton:hover {
+  background-color: rgb(84, 95, 143);
+  color: rgb(239, 235, 235);
+  margin-bottom: 20px;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}

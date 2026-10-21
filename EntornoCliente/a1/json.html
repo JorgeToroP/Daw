@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi tienda API</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #productos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .producto {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 200px;
+      box-shadow: 0 2px 5px #ccc;
+    }
+
+    .precio {
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Mi tienda de productos</h1>
+
+  <div id="productos">Cargando productos...</div>
+
+  <script>
+    const URL_API =
+      "https://jsonblob.com/api/jsonBlob/01a13a94-f6c1-79aa-9a24-52e43d8318c9";
+
+    async function cargarProductos() {
+      const contenedor = document.getElementById("productos");
+
+      try {
+        const respuesta = await fetch(URL_API);
+
+        if (!respuesta.ok) {
+          throw new Error("Error HTTP " + respuesta.status);
+        }
+
+        const datos = await respuesta.json();
+
+        contenedor.innerHTML = "";
+
+        datos.products.forEach(producto => {
+          const tarjeta = document.createElement("div");
+          tarjeta.className = "producto";
+
+          const nombre = document.createElement("h3");
+          nombre.textContent = producto.title;
+
+          const precio = document.createElement("p");
+          precio.className = "precio";
+          precio.textContent = producto.price + " " + datos.currency;
+
+          tarjeta.append(nombre, precio);
+          contenedor.appendChild(tarjeta);
+        });
+
+      } catch (error) {
+        contenedor.textContent = "Error al cargar los productos";
+        console.error(error);
+      }
+    }
+
+    cargarProductos();
+  </script>
+
+</body>
+</html>

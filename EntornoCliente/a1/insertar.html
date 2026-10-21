@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Insertar producto</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      padding: 30px;
+    }
+
+    .contenedor {
+      max-width: 400px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px #0002;
+    }
+
+    h1 { text-align: center; }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background: #16a34a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #mensaje {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="contenedor">
+    <h1>Insertar producto</h1>
+
+    <form id="formulario">
+      <label>SKU</label>
+      <input type="text" id="sku" required>
+
+      <label>Nombre</label>
+      <input type="text" id="nombre" required>
+
+      <label>Precio (€)</label>
+      <input type="number" id="precio"
+             step="0.01" min="0" required>
+
+      <button type="submit">Insertar producto</button>
+    </form>
+
+    <p id="mensaje"></p>
+  </div>
+
+  <script>
+    const API = "https://jsonblob.com/api/jsonBlob/01a13a94-f6c1-79aa-9a24-52e43d8318c9";
+
+    document.getElementById("formulario")
+      .addEventListener("submit", insertarProducto);
+
+    async function insertarProducto(evento) {
+      evento.preventDefault();
+
+      const sku = document.getElementById("sku").value.trim();
+      const nombre = document.getElementById("nombre").value.trim();
+      const precio = document.getElementById("precio").value;
+      const mensaje = document.getElementById("mensaje");
+
+      try {
+        // 1. Obtener todos los datos
+        const respuesta = await fetch(API);
+
+        if (!respuesta.ok) {
+          throw new Error("Error GET: " + respuesta.status);
+        }
+
+        const datos = await respuesta.json();
+
+        // 2. Comprobar que no exista el SKU
+        const existe = datos.products.some(
+          producto => producto.SKU === sku
+        );
+
+        if (existe) {
+          mensaje.textContent = "El SKU ya existe";
+          return;
+        }
+
+        // 3. Insertar nuevo producto
+        const nuevoProducto = {
+          SKU: sku,
+          title: nombre,
+          price: Number(precio).toFixed(2)
+        };
+
+        datos.products.push(nuevoProducto);
+
+        // 4. Guardar el JSON completo
+        const guardar = await fetch(API, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(datos)
+        });
+
+        if (!guardar.ok) {
+          throw new Error("Error PUT: " + guardar.status);
+        }
+
+        mensaje.textContent = "Producto insertado correctamente";
+        document.getElementById("formulario").reset();
+
+      } catch (error) {
+        mensaje.textContent = "Error: " + error.message;
+        console.error(error);
+      }
+    }
+  </script>
+
+</body>
+</html>

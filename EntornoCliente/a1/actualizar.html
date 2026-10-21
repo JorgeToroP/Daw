@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Actualizar producto</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eff6ff;
+      padding: 30px;
+    }
+
+    .contenedor {
+      max-width: 400px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px #0002;
+    }
+
+    h1 { text-align: center; }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #mensaje {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="contenedor">
+    <h1>Actualizar producto</h1>
+
+    <label>SKU del producto</label>
+    <input type="text" id="sku">
+
+    <button onclick="buscarProducto()">
+      Buscar producto
+    </button>
+
+    <div id="edicion" style="display:none">
+      <label>Nuevo nombre</label>
+      <input type="text" id="nombre">
+
+      <label>Nuevo precio (€)</label>
+      <input type="number" id="precio"
+             step="0.01" min="0">
+
+      <button onclick="actualizarProducto()">
+        Guardar cambios
+      </button>
+    </div>
+
+    <p id="mensaje"></p>
+  </div>
+
+  <script>
+    const API = "https://jsonblob.com/api/jsonBlob/01a13a94-f6c1-79aa-9a24-52e43d8318c9";
+
+    let datos;
+    let skuSeleccionado = "";
+
+    async function buscarProducto() {
+      const sku = document.getElementById("sku").value.trim();
+      const mensaje = document.getElementById("mensaje");
+
+      document.getElementById("edicion").style.display = "none";
+      skuSeleccionado = "";
+
+      try {
+        const respuesta = await fetch(API);
+
+        if (!respuesta.ok) {
+          throw new Error("Error GET: " + respuesta.status);
+        }
+
+        datos = await respuesta.json();
+
+        const producto = datos.products.find(
+          p => p.SKU === sku
+        );
+
+        if (!producto) {
+          mensaje.textContent = "Producto no encontrado";
+          return;
+        }
+
+        document.getElementById("nombre").value = producto.title;
+        document.getElementById("precio").value = producto.price;
+
+        skuSeleccionado = sku;
+        document.getElementById("edicion").style.display = "block";
+
+        mensaje.textContent = "Producto encontrado";
+
+      } catch (error) {
+        mensaje.textContent = "Error: " + error.message;
+        console.error(error);
+      }
+    }
+
+    async function actualizarProducto() {
+      const mensaje = document.getElementById("mensaje");
+
+      try {
+        if (!skuSeleccionado) {
+          throw new Error("Primero busca un producto");
+        }
+
+        const nombre = document.getElementById("nombre").value.trim();
+        const precio = Number(document.getElementById("precio").value);
+
+        if (!nombre || !Number.isFinite(precio) || precio < 0) {
+          throw new Error("Introduce un nombre y precio válidos");
+        }
+
+        // Recuperar la versión actual del JSON
+        const lectura = await fetch(API);
+
+        if (!lectura.ok) {
+          throw new Error("Error GET: " + lectura.status);
+        }
+
+        datos = await lectura.json();
+
+        // Buscar producto por SKU
+        const producto = datos.products.find(
+          p => p.SKU === skuSeleccionado
+        );
+
+        if (!producto) {
+          throw new Error("El producto ya no existe");
+        }
+
+        // Modificar sus datos
+        producto.title = nombre;
+        producto.price = precio.toFixed(2);
+
+        // Guardar documento completo
+        const respuesta = await fetch(API, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(datos)
+        });
+
+        if (!respuesta.ok) {
+          throw new Error("Error PUT: " + respuesta.status);
+        }
+
+        mensaje.textContent = "Producto actualizado correctamente";
+
+      } catch (error) {
+        mensaje.textContent = "Error: " + error.message;
+        console.error(error);
+      }
+    }
+  </script>
+
+</body>
+</html>
