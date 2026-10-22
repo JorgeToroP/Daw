@@ -8,7 +8,7 @@ siguiente_id = 1      # contador global de ids
 
 def pedir_entero(mensaje):
     # TODO 3: repetir con while hasta que el usuario escriba un entero válido
-    #         (usa try / except ValueError)
+    #         (usa try / except ValueError)ghghghgu
     pass
 
 def pedir_float(mensaje):
