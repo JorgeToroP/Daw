@@ -1,0 +1,15 @@
+.contenedor{
+    display: flex;
+    justify-content: flex-start;
+    background-color: lightgray;
+}
+
+.caja{
+    width: 100px;
+    height: 100px;
+    background-color: steelblue;
+    color: white;
+    margin: 5px;
+    text-align: center;
+    line-height: 100px;
+}

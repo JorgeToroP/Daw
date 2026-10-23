@@ -1,0 +1,12 @@
+.contenedor{
+    display: flex;
+    flex-direction: column;
+}
+
+.caja{
+    width: 100px;
+    height: 100px;
+    background-color: green;
+    color: white;
+    margin: 5px;
+}
