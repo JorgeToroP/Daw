@@ -1,0 +1,22 @@
+theme: {
+  extend: {
+    colors: {
+      "primary-container": "#ff6b00",
+      "primary": "#a04100",
+      "secondary": "#a83900",
+      "brand-gradient-start": "#FF8A00",
+      "brand-gradient-end": "#E65100",
+      "background-canvas": "#FFFFFF",
+      "background-subtle": "#F8F9FA",
+      "surface-card": "#FFFFFF",
+      "text-primary": "#121212",
+      "text-secondary": "#4B5563"
+    },
+    fontFamily: {
+      "display": ["Montserrat"],
+      "headline-lg": ["Montserrat"],
+      "body-lg": ["Inter"],
+      "label-md": ["Inter"]
+    }
+  }
+}

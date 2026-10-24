@@ -1,3 +1,4 @@
+
 const productosTienda = {
 
     "currency": "€",
@@ -192,32 +193,23 @@ function configurarBotonesRestar() {
 configurarBotonesRestar();
 
 
-/*
 
-// Cada botón cambia una cantidad y vuelve a dibujar la pantalla.
-function cambiar(sku, cambio) {
-const producto = carrito.obtenerInformacionProducto(sku);
-carrito.actualizarUnidades(sku, producto.quantity + cambio);
-mostrar();
-
-//Pedimos los productos e iniciamos el carrito.
-const URL_API = "api.php";
+const URL_API = "api.php"; // Aquí puedes poner la URL de tu API de JSONBlob.
 
 async function iniciar() {
-try {
-const respuesta = await fetch(URL_API);
-if (!respuesta.ok) throw new Error("HTTP " + respuesta. status);
-const datos = await respuesta.json();
-carrito = new Carrito(datos.products, datos.currency);
-mostrar();
-estado.textContent = "Productos cargados. Usa
-} catch (error) {
-estado.textContent = "No se pudieron cargar los productos: " + error.message;
-}
+  try {
+    const respuesta = await fetch(URL_API);
+    if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
+
+    const datos = await respuesta.json();
+    carrito = new Carrito(datos.products, datos.currency);
+    mostrarProductos();
+    mostrarResumen();
+    estado.textContent = "Productos cargados. Usa − y + para cambiar las unidades.";
+  } catch (error) {
+    estado.textContent = "No se pudieron cargar los productos: " + error.message;
+  }
 }
 
 iniciar();
 
-y + para cambiar las unidades.";
-
-*/
