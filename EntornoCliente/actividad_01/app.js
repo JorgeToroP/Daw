@@ -1,4 +1,4 @@
-
+/*
 const productosTienda = {
 
     "currency": "€",
@@ -45,6 +45,10 @@ const productosTienda = {
         }
     ]
 }
+*/
+
+let productosTienda = {};
+let miCarrito;
 
 class Carrito {
 
@@ -93,7 +97,7 @@ class Carrito {
     }
 }
 
-const miCarrito = new Carrito(productosTienda.products);
+//const miCarrito = new Carrito(productosTienda.products);
 
 //-----------------------DOM-------------------------
 
@@ -120,7 +124,7 @@ function mostrarProducto() {
     //intectamos ese texto html dentro del contenedor
     contenedor.innerHTML = htmlAcumulado;
 }
-mostrarProducto();
+// mostrarProducto();
 
 
 function actualizarPantalla() {
@@ -144,7 +148,7 @@ function actualizarPantalla() {
     vistaCarrito.innerHTML = resumenHtml;
 
 }
-actualizarPantalla();
+//actualizarPantalla();
 
 
 function configurarBotonesSumar() {
@@ -170,7 +174,7 @@ function configurarBotonesSumar() {
     });
 
 }
-configurarBotonesSumar();
+//configurarBotonesSumar();
 
 function configurarBotonesRestar() {
     const botonesCesta = document.querySelectorAll('.boton-restar');
@@ -190,24 +194,36 @@ function configurarBotonesRestar() {
         })
     })
 }
-configurarBotonesRestar();
+//configurarBotonesRestar();
 
 
 
-const URL_API = "api.php"; // Aquí puedes poner la URL de tu API de JSONBlob.
+const URL_API = "api.php"; 
 
 async function iniciar() {
   try {
     const respuesta = await fetch(URL_API);
-    if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
 
+    if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
+    
+    //descargamos los datos
     const datos = await respuesta.json();
-    carrito = new Carrito(datos.products, datos.currency);
-    mostrarProductos();
-    mostrarResumen();
-    estado.textContent = "Productos cargados. Usa − y + para cambiar las unidades.";
-  } catch (error) {
-    estado.textContent = "No se pudieron cargar los productos: " + error.message;
+
+    //relleno la variable global para mostrarProducto()
+    productosTienda = datos;
+    //instanciamos el carrito
+    miCarrito = new Carrito(productosTienda.products);
+
+    //
+    mostrarProducto();
+    actualizarPantalla();
+    configurarBotonesSumar();
+    configurarBotonesRestar();
+   
+    console.log("Aplicacion cargada desde la API");
+
+  }catch (error) {
+    console.error("No se pudieron cargar los productos: " + error.message);
   }
 }
 
