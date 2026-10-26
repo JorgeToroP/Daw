@@ -1,0 +1,7 @@
+p { font-family: Tahoma, sans-serif; }
+
+.principal { color: purple; }  
+.resaltado { background: #fff8b3; }
+.secundario { color: #1d4ed8; } 
+  
+#selectorID { color: #16a34a; text-decoration: underline; } 
