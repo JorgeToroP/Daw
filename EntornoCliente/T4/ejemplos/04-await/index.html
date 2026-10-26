@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>E04 · Esperar dentro de una función</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="app.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <p>DWEC · Ejercicio 04</p>
+            <h1>Esperar dentro de una función</h1>
+            <p class="lead">await pausa esta función hasta que la promesa se resuelve. El resto de la interfaz sigue disponible.</p>
+            <div class="controls">
+                <label>Resultado 
+                    <select id="mode">
+                        <option value="ok">Correcto</option>
+                        <option value="error">Con error</option>
+                    </select>
+                </label>
+                <button id="run">Cargar perfil</button>
+                <button id="touch">Probar interfaz</button>
+                <span id="count">Clics: 0</span>
+            </div>
+            <p id="status" class="status" role="status">Preparado</p>
+            <pre id="log" aria-live="polite"></pre>
+        </main></body></html>

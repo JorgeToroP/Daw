@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>E05 · Objeto y texto JSON</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="app.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <nav><a href="../index.html">Material de la clase</a></nav>
+            <p>DWEC · Ejercicio 05</p>
+            <h1>Objeto y texto JSON</h1>
+            <p class="lead">JSON permite representar datos como texto. parse y stringify realizan conversiones opuestas.</p>
+            <div class="controls">
+                <button id="valid">Ejemplo válido</button>
+                <button id="invalid">Ejemplo incorrecto</button>
+                <button id="parse">JSON.parse</button>
+                <button id="stringify">JSON.stringify</button>
+            </div>
+            <label for="source">Texto JSON editable</label>
+            <textarea id="source" spellcheck="false">{"nombre":"Ana","edad":20,"matriculada":true,"modulos":["DWEC","DWES"]}</textarea>
+            <p id="status" class="status" role="status">El contenido del cuadro es un string.</p>
+            <pre id="result" aria-live="polite"></pre>
+        </main>
+    </body>
+</html>

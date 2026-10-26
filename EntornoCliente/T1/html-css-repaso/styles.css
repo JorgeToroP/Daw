@@ -1,0 +1,97 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #1f2933;
+    background-color: #ffffff;
+    line-height: 1.5;
+}
+
+.contenedor {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.cabecera {
+    background-color: #e9f2f8;
+    border-bottom: 2px solid #b5cbd9;
+    padding: 20px 0;
+}
+
+.cabecera-interior {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+h1, h2, h3 {
+    margin-top: 0;
+}
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 0;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: #174a67;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 32px 0 48px;
+}
+
+.introduccion {
+    margin-bottom: 36px;
+}
+
+.introduccion p {
+    max-width: 680px;
+}
+
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.tarjeta {
+    border: 1px solid #b5cbd9;
+    padding: 20px;
+    background-color: #f7fafc;
+}
+
+.tarjeta h3 {
+    color: #174a67;
+}
+
+.pie {
+    border-top: 1px solid #b5cbd9;
+    padding: 18px 0;
+    color: #52616b;
+}
+
+.pie p {
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+    .tarjetas {
+        grid-template-columns: 1fr;
+    }
+}

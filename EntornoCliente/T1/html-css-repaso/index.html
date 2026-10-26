@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi espacio de aprendizaje web</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="cabecera">
+        <div class="contenedor cabecera-interior">
+            <h1>Mi espacio de aprendizaje web</h1>
+            <nav aria-label="Navegación principal">
+                <a href="#inicio">Inicio</a>
+                <a href="#temas">Temas</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <section id="inicio" class="introduccion">
+            <h2>Aprender a crear páginas web</h2>
+            <p>HTML organiza el contenido de una página. CSS cambia su aspecto y distribuye sus elementos.</p>
+            <p>En esta página repasamos las herramientas básicas para empezar.</p>
+        </section>
+
+        <section id="temas" aria-labelledby="titulo-temas">
+            <h2 id="titulo-temas">Tres temas para comenzar</h2>
+            <div class="tarjetas">
+                <article class="tarjeta">
+                    <h3>HTML</h3>
+                    <p>Crea títulos, párrafos, enlaces y listas.</p>
+                </article>
+                <article class="tarjeta">
+                    <h3>CSS</h3>
+                    <p>Define colores, tamaños, tipografías y espacios.</p>
+                </article>
+                <article class="tarjeta">
+                    <h3>Diseño</h3>
+                    <p>Usa Flexbox y Grid para ordenar el contenido.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contacto" class="pie">
+        <div class="contenedor">
+            <p>Proyecto de repaso de HTML y CSS</p>
+        </div>
+    </footer>
+</body>
+</html>

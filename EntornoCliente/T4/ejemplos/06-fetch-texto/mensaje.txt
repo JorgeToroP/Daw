@@ -1,0 +1,2 @@
+El servidor ha enviado este texto.
+La página sigue abierta y JavaScript actualiza solo este panel.

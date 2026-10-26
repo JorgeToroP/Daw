@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>E07 · Datos JSON en el DOM</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="app.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <nav><a href="../index.html">Material de la clase</a></nav>
+            <p>DWEC · Ejercicio 07</p>
+            <h1>Datos JSON en el DOM</h1>
+            <p class="lead">Después de comprobar la Response, json() entrega datos que JavaScript puede recorrer.</p>
+            <div class="controls">
+                <label>Respuesta 
+                    <select id="resource">
+                        <option value="productos.json">Catálogo correcto</option>
+                        <option value="vacio.json">Lista vacía</option>
+                        <option value="roto.json">JSON mal formado</option>
+                        <option value="ausente.json">HTTP 404</option>
+                    </select>
+                </label>
+                <button id="run">Cargar catálogo</button>
+            </div><p id="status" class="status" role="status">Preparado</p>
+            <div id="products" class="grid"></div>
+            </details>
+        </main>
+    </body>
+</html>

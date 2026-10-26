@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>E01 · El orden de ejecución</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="app.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <h1>El orden de ejecución</h1>
+            <p class="lead">El navegador puede esperar un temporizador mientras atiende otros clics.</p>
+            <div class="controls">
+                <button id="run">Ejecutar secuencia</button>
+                <button id="touch">Contar clics durante la espera</button>
+                <span id="count">Clics: 0</span>
+            </div>
+            <p id="status" class="status" role="status">Preparado</p>
+            <ol id="log" aria-live="polite"></ol>
+        </main>
+    </body>
+    </html>

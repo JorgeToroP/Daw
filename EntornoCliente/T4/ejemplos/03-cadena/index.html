@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>E03 · Un resultado alimenta al siguiente</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="app.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <p>DWEC · Ejercicio 03</p>
+            <h1>Un resultado alimenta al siguiente</h1>
+            <p class="lead">Cada then devuelve una nueva promesa y recibe el valor devuelto por el paso anterior.</p>
+            <div class="controls">
+                <label>Precio (€) 
+                    <input id="price" type="number" value="100" step="0.01">
+                </label>
+                <button id="run">Aplicar descuento e IVA</button>
+            </div>
+            <p id="status" class="status" role="status">Descuento: 10 %. IVA: 21 %.</p>
+            <ol id="log" aria-live="polite"></ol>         
+        </main>
+    </body>
+</html>

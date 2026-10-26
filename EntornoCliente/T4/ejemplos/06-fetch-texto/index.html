@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>E06 · La respuesta y su contenido</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="app.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <p>DWEC · Ejercicio 06</p>
+            <h1>La respuesta y su contenido</h1>
+            <p class="lead">fetch entrega una Response. text() lee su cuerpo y devuelve otra promesa.</p>
+            <div class="controls">
+                <label>Recurso 
+                    <select id="resource">
+                        <option value="mensaje.txt">Archivo existente</option>
+                        <option value="no-existe.txt">Archivo inexistente (404)</option>
+                    </select>
+                </label>
+                <button id="run">Leer texto</button>
+            </div>
+            <p id="status" class="status" role="status">Preparado</p>
+            <pre id="meta"></pre>
+            <pre id="result" aria-live="polite"></pre>
+            <h2>Tu tarea</h2>
+            <p>Carga el archivo correcto y el inexistente. Abre la pestaña Red del navegador y localiza el estado HTTP. Identifica las dos promesas.</p>
+        </main>
+    </body>
+</html>
