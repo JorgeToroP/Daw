@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biblioteca · Apache + Tomcat + MariaDB</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+<header class="cabecera">
+  <div class="marca">
+    <span class="logo">📚</span>
+    <div>
+      <h1>Biblioteca distribuida</h1>
+      <p>Ejemplo de despliegue en tres capas</p>
+    </div>
+  </div>
+
+  <!-- Selector de ruta: a traves del proxy de Apache o directo a Tomcat -->
+  <div class="modo" role="group" aria-label="Ruta de las peticiones">
+    <button class="modo-btn activo" data-modo="proxy">Vía Apache (proxy)</button>
+    <button class="modo-btn" data-modo="directo">Directo a Tomcat</button>
+  </div>
+</header>
+
+<!-- Diagrama de la arquitectura. Se ilumina con cada peticion -->
+<section class="arquitectura" aria-label="Arquitectura">
+  <div class="nodo" id="nodo-navegador">
+    <div class="nodo-icono">🖥️</div>
+    <div class="nodo-titulo">Navegador</div>
+    <div class="nodo-detalle">HTML · CSS · JS</div>
+  </div>
+  <div class="enlace" id="enlace-1"><span class="paquete"></span><small>HTTP :80</small></div>
+  <div class="nodo" id="nodo-apache">
+    <div class="nodo-icono">🪶</div>
+    <div class="nodo-titulo">Apache</div>
+    <div class="nodo-detalle">Servidor web · estáticos + proxy</div>
+  </div>
+  <div class="enlace" id="enlace-2"><span class="paquete"></span><small>HTTP :8080</small></div>
+  <div class="nodo" id="nodo-tomcat">
+    <div class="nodo-icono">🐱</div>
+    <div class="nodo-titulo">Tomcat</div>
+    <div class="nodo-detalle" id="info-tomcat">Servidor de aplicaciones · biblioteca.war</div>
+  </div>
+  <div class="enlace" id="enlace-3"><span class="paquete"></span><small>JDBC :3306</small></div>
+  <div class="nodo" id="nodo-bd">
+    <div class="nodo-icono">🐬</div>
+    <div class="nodo-titulo">MariaDB</div>
+    <div class="nodo-detalle" id="info-bd">Base de datos · biblioteca</div>
+  </div>
+</section>
+
+<main class="contenido">
+
+  <!-- Columna principal: buscador y catalogo -->
+  <section class="panel catalogo">
+    <div class="barra-busqueda">
+      <input id="buscar" type="search" placeholder="Busca por título o autor…" autocomplete="off">
+      <button id="btn-estado" class="btn-secundario" title="Consultar /api/estado">Comprobar despliegue</button>
+    </div>
+    <div id="filtros" class="filtros"></div>
+    <p id="resumen" class="resumen">Cargando…</p>
+    <div id="libros" class="rejilla"></div>
+  </section>
+
+  <!-- Columna lateral: estadisticas, alta y registro de peticiones -->
+  <aside class="lateral">
+    <section class="panel">
+      <h2>Estadísticas por género</h2>
+      <div id="estadisticas"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Añadir libro <small>(POST → INSERT)</small></h2>
+      <form id="form-alta" class="formulario">
+        <input name="titulo" placeholder="Título" required>
+        <input name="autor" placeholder="Autor" required>
+        <div class="fila">
+          <input name="anio" type="number" placeholder="Año" required>
+          <input name="paginas" type="number" min="1" placeholder="Páginas" required>
+        </div>
+        <div class="fila">
+          <input name="valoracion" type="number" min="0" max="5" step="0.1" placeholder="Valoración 0-5" required>
+          <select name="genero" id="select-genero" required></select>
+        </div>
+        <button type="submit">Guardar en MariaDB</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Peticiones HTTP</h2>
+      <ol id="registro" class="registro"></ol>
+    </section>
+  </aside>
+</main>
+
+<footer class="pie">
+  Apache sirve esta página desde <code>htdocs/biblioteca</code> · los datos llegan de <code>biblioteca.war</code> en Tomcat
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

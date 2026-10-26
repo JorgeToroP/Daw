@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Descriptor de despliegue. Servlet 3.1 = Tomcat 8.x -->
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <display-name>Biblioteca API</display-name>
+
+    <!--
+      Datos de conexion a MariaDB (XAMPP, puerto 3306).
+      Se pueden cambiar aqui o directamente en
+      C:\xampp\tomcat\webapps\biblioteca\WEB-INF\web.xml tras desplegar
+      (Tomcat recarga la aplicacion al detectar el cambio).
+    -->
+    <context-param>
+        <param-name>db.url</param-name>
+        <param-value>jdbc:mariadb://localhost:3306/biblioteca</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.usuario</param-name>
+        <param-value>biblio</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.clave</param-name>
+        <param-value>biblio123</param-value>
+    </context-param>
+
+    <!-- Los servlets y el filtro se declaran con anotaciones (@WebServlet, @WebFilter) -->
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+</web-app>

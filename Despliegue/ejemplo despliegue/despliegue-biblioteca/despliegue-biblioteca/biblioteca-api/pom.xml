@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Proyecto Maven que genera el fichero biblioteca.war
+  Destino: Tomcat 8.5.x (el que incluye XAMPP para Windows), Servlet API 3.1, Java 8+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>es.daw.biblioteca</groupId>
+    <artifactId>biblioteca-api</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <name>Biblioteca API</name>
+    <description>Servidor de aplicaciones (Tomcat) que expone una API JSON sobre MariaDB</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Compilamos para Java 8 para que funcione con cualquier JRE que use Tomcat 8.5 -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Carpeta webapps de Tomcat en XAMPP (solo se usa con el perfil "desplegar") -->
+        <tomcat.webapps>C:/xampp/tomcat/webapps</tomcat.webapps>
+    </properties>
+
+    <dependencies>
+        <!-- API de Servlets: la aporta Tomcat en tiempo de ejecucion, por eso es "provided"
+             y NO se mete dentro del WAR. Tomcat 8.5 usa javax.servlet (no jakarta.servlet) -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Driver JDBC de MariaDB: Tomcat no lo trae, asi que viaja dentro del WAR (WEB-INF/lib) -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+
+        <!-- Gson: convierte objetos Java a JSON. Tambien viaja dentro del WAR -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- El WAR se llamara biblioteca.war, por tanto Tomcat lo publicara en /biblioteca -->
+        <finalName>biblioteca</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- Perfil opcional: ademas de generar el WAR, lo copia a la carpeta webapps de Tomcat.
+             Uso: mvn clean package -Pdesplegar -->
+        <profile>
+            <id>desplegar</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>copiar-war-a-tomcat</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <copy file="${project.build.directory}/${project.build.finalName}.war"
+                                              todir="${tomcat.webapps}" overwrite="true"/>
+                                        <echo message="WAR copiado a ${tomcat.webapps}"/>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

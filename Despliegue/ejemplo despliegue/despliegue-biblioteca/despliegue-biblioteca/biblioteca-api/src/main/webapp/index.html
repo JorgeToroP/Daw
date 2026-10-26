@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Biblioteca API (Tomcat)</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #10141c; color: #e6e9ef; max-width: 720px; margin: 60px auto; padding: 0 16px; line-height: 1.6; }
+  h1 { color: #f5a524; margin-bottom: 0; }
+  code { background: #1d2430; padding: 2px 6px; border-radius: 4px; }
+  a { color: #7cc4ff; }
+  li { margin: 6px 0; }
+</style>
+</head>
+<body>
+  <h1>Servidor de aplicaciones</h1>
+  <p>Esta pagina la sirve <strong>Tomcat</strong> desde dentro de <code>biblioteca.war</code>. Aqui no vive la interfaz: la web la sirve Apache. Tomcat solo ofrece la API JSON:</p>
+  <ul>
+    <li><a href="api/estado">api/estado</a> estado de Tomcat y de MariaDB</li>
+    <li><a href="api/libros">api/libros</a> todos los libros</li>
+    <li><a href="api/libros?q=tolkien">api/libros?q=tolkien</a> busqueda por texto</li>
+    <li><a href="api/generos">api/generos</a> generos</li>
+    <li><a href="api/estadisticas">api/estadisticas</a> estadisticas por genero</li>
+  </ul>
+</body>
+</html>
