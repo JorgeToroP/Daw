@@ -1,0 +1,11 @@
+.tarjeta {
+    border: 2px solid #c5c810;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    max-width: 400px;
+}
+
+h2 {
+    color: #c5c810;
+}
