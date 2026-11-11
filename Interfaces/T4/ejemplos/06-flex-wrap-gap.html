@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06. flex-wrap y gap: una galería que salta de línea</title>
+<style>
+  /* ===== Estilos de la página de demostración (NO forman parte del ejemplo) ===== */
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #1f2937; background: #fff; }
+  .pagina { max-width: 1150px; margin: 0 auto; padding: 28px 24px 60px; }
+  .cabecera h1 { font-size: 30px; margin: 0 0 6px; }
+  .cabecera .num { display: inline-block; background: #1f2937; color: #fff; border-radius: 6px; padding: 2px 10px; font-size: 14px; margin-bottom: 10px; }
+  .cabecera p { font-size: 17px; line-height: 1.5; margin: 6px 0 0; color: #374151; max-width: 900px; }
+  .panel { margin-top: 22px; }
+  .panel h2 { font-size: 18px; margin: 0 0 10px; color: #111827; }
+  .controles { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0 4px; }
+  .controles .etq { font-family: ui-monospace, Consolas, monospace; font-size: 14px; color: #6b7280; margin-right: 4px; min-width: 150px; }
+  .controles button { font: 600 14px ui-monospace, Consolas, monospace; border: 1.5px solid #d1d5db; background: #fff; color: #1f2937; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  .controles button:hover { border-color: #7048e8; }
+  .controles button.activo { background: #7048e8; border-color: #7048e8; color: #fff; }
+  .ahora { font: 15px ui-monospace, Consolas, monospace; background: #f3f0ff; color: #5f3dc4; padding: 8px 12px; border-radius: 8px; display: inline-block; margin: 8px 0 14px; }
+  .escena { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 14px; background: #fafafa; }
+  .dos { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px; margin-top: 26px; }
+  @media (max-width: 900px) { .dos { grid-template-columns: 1fr; } }
+  pre { margin: 0; background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px 16px; font: 14px/1.55 ui-monospace, Consolas, monospace; overflow: auto; white-space: pre-wrap; }
+  .expl { list-style: none; padding: 0; margin: 0; }
+  .expl li { padding: 10px 0; border-bottom: 1px solid #f1f3f5; font-size: 15.5px; line-height: 1.5; }
+  .expl code, .cabecera code { font-family: ui-monospace, Consolas, monospace; background: #fff4e6; color: #d9480f; padding: 1px 6px; border-radius: 5px; font-size: 14px; }
+  .volver { display: inline-block; margin-bottom: 14px; color: #7048e8; text-decoration: none; font-weight: 600; }
+</style>
+<style id="demo">
+  .galeria {
+    display: flex;
+    flex-wrap: wrap;            /* permite varias líneas */
+    gap: 14px;                  /* espacio entre filas y columnas */
+    padding: 14px;
+    border: 3px solid #1f2937;
+    border-radius: 12px;
+  }
+
+  .foto {
+    width: 150px;               /* ancho deseado de cada foto */
+    height: 110px;
+    border-radius: 12px;
+    color: white;
+    font: bold 26px system-ui;
+    display: flex; justify-content: center; align-items: center;
+  }
+  .foto:nth-child(4n+1) { background: #e8590c; }
+  .foto:nth-child(4n+2) { background: #0ca678; }
+  .foto:nth-child(4n+3) { background: #7048e8; }
+  .foto:nth-child(4n+4) { background: #d6336c; }
+</style>
+</head>
+<body>
+<div class="pagina">
+  <a class="volver" href="index.html">&larr; Todos los ejemplos</a>
+  <div class="cabecera">
+    <span class="num">Ejemplo 06</span>
+    <h1>flex-wrap y gap: una galería que salta de línea</h1>
+    <p>Por defecto, flex mete todos los hijos en UNA sola fila aunque no quepan (los encoge). Con <code>flex-wrap: wrap</code> los que no caben bajan a la línea siguiente.</p>
+  </div>
+
+  <div class="panel">
+    <h2>Pruébalo: pulsa los botones y mira qué cambia</h2>
+    <div id="controles"></div>
+    <div class="ahora" id="ahora"></div>
+    <div id="demo-html">
+      <div class="galeria">
+        <div class="foto">1</div><div class="foto">2</div><div class="foto">3</div><div class="foto">4</div>
+        <div class="foto">5</div><div class="foto">6</div><div class="foto">7</div><div class="foto">8</div>
+        <div class="foto">9</div><div class="foto">10</div><div class="foto">11</div><div class="foto">12</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dos">
+    <div>
+      <h2>El CSS del ejemplo (exactamente el que se está aplicando)</h2>
+      <pre id="codigo-css"></pre>
+      <h2 style="margin-top:18px">El HTML</h2>
+      <pre id="codigo-html"></pre>
+    </div>
+    <div>
+      <h2>Qué hace cada línea</h2>
+      <ul class="expl">
+<li><code>flex-wrap: nowrap</code> Valor por defecto. Todo en una fila: las fotos se encogen por debajo de sus 150px para caber (flex-shrink). Si aun así no caben, se salen del contenedor.</li>
+<li><code>flex-wrap: wrap</code> Cada foto mantiene sus 150px y las que no caben bajan a la siguiente línea. Haz la ventana más estrecha y verás cómo se recolocan solas.</li>
+<li><code>gap</code> Un único valor separa por igual filas y columnas. Puedes darlos por separado: <code>gap: 20px 10px</code> (filas, columnas).</li>
+<li><code>display: flex; justify-content...; align-items: center</code> Dentro de cada foto se usa otra vez flex para centrar el número. Un elemento puede ser hijo flex y contenedor flex a la vez.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+// ===== Script de la demo: solo sirve para cambiar valores con botones =====
+// El ejemplo funciona igual sin este script: todo el layout es CSS puro.
+const CONTROLES = [{"sel": ".galeria", "prop": "flex-wrap", "valores": ["wrap", "nowrap"]}, {"sel": ".galeria", "prop": "gap", "valores": ["14px", "0", "40px"]}];
+document.getElementById('codigo-html').textContent = document.getElementById('demo-html').innerHTML.trim().replace(/^ {6}/gm, '');
+document.getElementById('codigo-css').textContent = document.getElementById('demo').textContent.trim().replace(/^ {2}/gm, '');
+const caja = document.getElementById('controles');
+const ahora = document.getElementById('ahora');
+function pinta(c, v) {
+  ahora.textContent = c.tipo === 'clase' ? '<div class="' + c.base + ' ' + v + '">' : c.sel + ' { ' + c.prop + ': ' + v + '; }';
+}
+CONTROLES.forEach(c => {
+  const fila = document.createElement('div'); fila.className = 'controles';
+  fila.innerHTML = '<span class="etq">' + (c.tipo === 'clase' ? 'clase' : c.prop) + '</span>';
+  c.valores.forEach((v, i) => {
+    const b = document.createElement('button'); b.textContent = v;
+    if (i === (c.inicial || 0)) b.classList.add('activo');
+    b.onclick = () => {
+      document.querySelectorAll(c.sel).forEach(el => {
+        if (c.tipo === 'clase') { c.valores.forEach(x => el.classList.remove(x)); el.classList.add(v); }
+        else el.style.setProperty(c.prop, v);
+      });
+      fila.querySelectorAll('button').forEach(x => x.classList.remove('activo'));
+      b.classList.add('activo'); pinta(c, v);
+    };
+    fila.appendChild(b);
+  });
+  caja.appendChild(fila);
+});
+if (CONTROLES.length) { const c = CONTROLES[0]; pinta(c, c.valores[c.inicial || 0]); } else { ahora.style.display = 'none'; }
+</script>
+</body>
+</html>

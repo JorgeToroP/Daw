@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10. grid-auto-rows y span: una cuadrícula tipo bento</title>
+<style>
+  /* ===== Estilos de la página de demostración (NO forman parte del ejemplo) ===== */
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #1f2937; background: #fff; }
+  .pagina { max-width: 1150px; margin: 0 auto; padding: 28px 24px 60px; }
+  .cabecera h1 { font-size: 30px; margin: 0 0 6px; }
+  .cabecera .num { display: inline-block; background: #1f2937; color: #fff; border-radius: 6px; padding: 2px 10px; font-size: 14px; margin-bottom: 10px; }
+  .cabecera p { font-size: 17px; line-height: 1.5; margin: 6px 0 0; color: #374151; max-width: 900px; }
+  .panel { margin-top: 22px; }
+  .panel h2 { font-size: 18px; margin: 0 0 10px; color: #111827; }
+  .controles { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0 4px; }
+  .controles .etq { font-family: ui-monospace, Consolas, monospace; font-size: 14px; color: #6b7280; margin-right: 4px; min-width: 150px; }
+  .controles button { font: 600 14px ui-monospace, Consolas, monospace; border: 1.5px solid #d1d5db; background: #fff; color: #1f2937; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  .controles button:hover { border-color: #7048e8; }
+  .controles button.activo { background: #7048e8; border-color: #7048e8; color: #fff; }
+  .ahora { font: 15px ui-monospace, Consolas, monospace; background: #f3f0ff; color: #5f3dc4; padding: 8px 12px; border-radius: 8px; display: inline-block; margin: 8px 0 14px; }
+  .escena { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 14px; background: #fafafa; }
+  .dos { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px; margin-top: 26px; }
+  @media (max-width: 900px) { .dos { grid-template-columns: 1fr; } }
+  pre { margin: 0; background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px 16px; font: 14px/1.55 ui-monospace, Consolas, monospace; overflow: auto; white-space: pre-wrap; }
+  .expl { list-style: none; padding: 0; margin: 0; }
+  .expl li { padding: 10px 0; border-bottom: 1px solid #f1f3f5; font-size: 15.5px; line-height: 1.5; }
+  .expl code, .cabecera code { font-family: ui-monospace, Consolas, monospace; background: #fff4e6; color: #d9480f; padding: 1px 6px; border-radius: 5px; font-size: 14px; }
+  .volver { display: inline-block; margin-bottom: 14px; color: #7048e8; text-decoration: none; font-weight: 600; }
+</style>
+<style id="demo">
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);   /* 4 columnas iguales */
+    grid-auto-rows: 110px;                    /* cada fila que se cree mide 110px */
+    gap: 14px;
+  }
+
+  .bento div { border-radius: 16px; color: white; font: bold 20px system-ui; padding: 16px; }
+
+  .grande  { grid-column: span 2; grid-row: span 2; background: #7048e8; }  /* 2x2 celdas */
+  .ancha   { grid-column: span 2; background: #e8590c; }                    /* 2 columnas */
+  .alta    { grid-row: span 2; background: #0ca678; }                       /* 2 filas */
+  .normal  { background: #d6336c; }
+  .entera  { grid-column: 1 / -1; background: #1f2937; }                    /* de la línea 1 a la última */
+</style>
+</head>
+<body>
+<div class="pagina">
+  <a class="volver" href="index.html">&larr; Todos los ejemplos</a>
+  <div class="cabecera">
+    <span class="num">Ejemplo 10</span>
+    <h1>grid-auto-rows y span: una cuadrícula tipo bento</h1>
+    <p>Las filas se crean solas según hagan falta; con <code>grid-auto-rows</code> les das altura. Con <code>span</code> un hijo ocupa varias celdas. Así se hacen los paneles tipo "bento" tan de moda.</p>
+  </div>
+
+  <div class="panel">
+    <h2>Pruébalo: pulsa los botones y mira qué cambia</h2>
+    <div id="controles"></div>
+    <div class="ahora" id="ahora"></div>
+    <div id="demo-html">
+      <div class="bento">
+        <div class="grande">Grande</div>
+        <div class="ancha">Ancha</div>
+        <div class="alta">Alta</div>
+        <div class="normal">1</div>
+        <div class="normal">2</div>
+        <div class="normal">3</div>
+        <div class="entera">Entera: grid-column: 1 / -1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dos">
+    <div>
+      <h2>El CSS del ejemplo (exactamente el que se está aplicando)</h2>
+      <pre id="codigo-css"></pre>
+      <h2 style="margin-top:18px">El HTML</h2>
+      <pre id="codigo-html"></pre>
+    </div>
+    <div>
+      <h2>Qué hace cada línea</h2>
+      <ul class="expl">
+<li><code>grid-auto-rows: 110px</code> No definimos cuántas filas hay: grid crea las que necesite y todas medirán 110px. Prueba con 60px o 160px.</li>
+<li><code>grid-column: span 2</code> "Ocupa 2 columnas a partir de donde te toque". La tarjeta Grande además tiene <code>grid-row: span 2</code>, así que ocupa un cuadrado de 2x2.</li>
+<li><code>grid-row: span 2</code> La verde ocupa dos filas de alto.</li>
+<li><code>grid-column: 1 / -1</code> Las líneas de la cuadrícula se numeran desde 1. <code>-1</code> es la última línea, así que el elemento va de lado a lado sin importar cuántas columnas haya.</li>
+<li><code>Colocación automática</code> No hemos dicho dónde va cada caja. Grid las coloca en orden en el primer hueco donde caben. Cambia la Grande a <code>span 3</code> y observa cómo se recoloca todo.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+// ===== Script de la demo: solo sirve para cambiar valores con botones =====
+// El ejemplo funciona igual sin este script: todo el layout es CSS puro.
+const CONTROLES = [{"sel": ".grande", "prop": "grid-column", "valores": ["span 2", "span 1", "span 3"]}, {"sel": ".bento", "prop": "grid-auto-rows", "valores": ["110px", "60px", "160px"]}];
+document.getElementById('codigo-html').textContent = document.getElementById('demo-html').innerHTML.trim().replace(/^ {6}/gm, '');
+document.getElementById('codigo-css').textContent = document.getElementById('demo').textContent.trim().replace(/^ {2}/gm, '');
+const caja = document.getElementById('controles');
+const ahora = document.getElementById('ahora');
+function pinta(c, v) {
+  ahora.textContent = c.tipo === 'clase' ? '<div class="' + c.base + ' ' + v + '">' : c.sel + ' { ' + c.prop + ': ' + v + '; }';
+}
+CONTROLES.forEach(c => {
+  const fila = document.createElement('div'); fila.className = 'controles';
+  fila.innerHTML = '<span class="etq">' + (c.tipo === 'clase' ? 'clase' : c.prop) + '</span>';
+  c.valores.forEach((v, i) => {
+    const b = document.createElement('button'); b.textContent = v;
+    if (i === (c.inicial || 0)) b.classList.add('activo');
+    b.onclick = () => {
+      document.querySelectorAll(c.sel).forEach(el => {
+        if (c.tipo === 'clase') { c.valores.forEach(x => el.classList.remove(x)); el.classList.add(v); }
+        else el.style.setProperty(c.prop, v);
+      });
+      fila.querySelectorAll('button').forEach(x => x.classList.remove('activo'));
+      b.classList.add('activo'); pinta(c, v);
+    };
+    fila.appendChild(b);
+  });
+  caja.appendChild(fila);
+});
+if (CONTROLES.length) { const c = CONTROLES[0]; pinta(c, c.valores[c.inicial || 0]); } else { ahora.style.display = 'none'; }
+</script>
+</body>
+</html>

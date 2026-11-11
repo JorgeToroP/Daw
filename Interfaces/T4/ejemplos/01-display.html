@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>01. display: block, inline e inline-block</title>
+<style>
+  /* ===== Estilos de la página de demostración (NO forman parte del ejemplo) ===== */
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #1f2937; background: #fff; }
+  .pagina { max-width: 1150px; margin: 0 auto; padding: 28px 24px 60px; }
+  .cabecera h1 { font-size: 30px; margin: 0 0 6px; }
+  .cabecera .num { display: inline-block; background: #1f2937; color: #fff; border-radius: 6px; padding: 2px 10px; font-size: 14px; margin-bottom: 10px; }
+  .cabecera p { font-size: 17px; line-height: 1.5; margin: 6px 0 0; color: #374151; max-width: 900px; }
+  .panel { margin-top: 22px; }
+  .panel h2 { font-size: 18px; margin: 0 0 10px; color: #111827; }
+  .controles { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0 4px; }
+  .controles .etq { font-family: ui-monospace, Consolas, monospace; font-size: 14px; color: #6b7280; margin-right: 4px; min-width: 150px; }
+  .controles button { font: 600 14px ui-monospace, Consolas, monospace; border: 1.5px solid #d1d5db; background: #fff; color: #1f2937; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  .controles button:hover { border-color: #7048e8; }
+  .controles button.activo { background: #7048e8; border-color: #7048e8; color: #fff; }
+  .ahora { font: 15px ui-monospace, Consolas, monospace; background: #f3f0ff; color: #5f3dc4; padding: 8px 12px; border-radius: 8px; display: inline-block; margin: 8px 0 14px; }
+  .escena { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 14px; background: #fafafa; }
+  .dos { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px; margin-top: 26px; }
+  @media (max-width: 900px) { .dos { grid-template-columns: 1fr; } }
+  pre { margin: 0; background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px 16px; font: 14px/1.55 ui-monospace, Consolas, monospace; overflow: auto; white-space: pre-wrap; }
+  .expl { list-style: none; padding: 0; margin: 0; }
+  .expl li { padding: 10px 0; border-bottom: 1px solid #f1f3f5; font-size: 15.5px; line-height: 1.5; }
+  .expl code, .cabecera code { font-family: ui-monospace, Consolas, monospace; background: #fff4e6; color: #d9480f; padding: 1px 6px; border-radius: 5px; font-size: 14px; }
+  .volver { display: inline-block; margin-bottom: 14px; color: #7048e8; text-decoration: none; font-weight: 600; }
+</style>
+<style id="demo">
+  .caja { color: white; padding: 10px 16px; margin: 6px; border-radius: 8px; font-weight: bold; }
+
+  /* block: ocupa todo el ancho y empuja al siguiente abajo */
+  .block { display: block; background: #7048e8; }
+
+  /* inline: se mete en la línea de texto; ignora width y height */
+  .inline { display: inline; background: #e8590c; width: 300px; height: 80px; }
+
+  /* inline-block: va en línea PERO respeta width y height */
+  .inline-block { display: inline-block; background: #0ca678; width: 170px; height: 70px; }
+
+  /* La caja que cambias con los botones */
+  .prueba { display: block; background: #d6336c; width: 220px; }
+</style>
+</head>
+<body>
+<div class="pagina">
+  <a class="volver" href="index.html">&larr; Todos los ejemplos</a>
+  <div class="cabecera">
+    <span class="num">Ejemplo 01</span>
+    <h1>display: block, inline e inline-block</h1>
+    <p>Antes de Flexbox y Grid, el navegador coloca cada elemento según su <code>display</code>. Los bloques ocupan toda la fila y se apilan; los elementos en línea fluyen dentro del texto como si fueran palabras.</p>
+  </div>
+
+  <div class="panel">
+    <h2>Pruébalo: pulsa los botones y mira qué cambia</h2>
+    <div id="controles"></div>
+    <div class="ahora" id="ahora"></div>
+    <div id="demo-html">
+      <div class="escena">
+        <div class="caja block">Bloque 1</div>
+        <div class="caja block">Bloque 2</div>
+        <p>Texto normal <span class="caja inline">inline A</span> sigue el texto <span class="caja inline">inline B</span> y continúa.</p>
+        <p>Texto normal <span class="caja inline-block">inline-block A</span> sigue <span class="caja inline-block">inline-block B</span> y continúa.</p>
+        <p>Antes de la caja rosa <span class="caja prueba">¡Cámbiame!</span> después de la caja rosa.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dos">
+    <div>
+      <h2>El CSS del ejemplo (exactamente el que se está aplicando)</h2>
+      <pre id="codigo-css"></pre>
+      <h2 style="margin-top:18px">El HTML</h2>
+      <pre id="codigo-html"></pre>
+    </div>
+    <div>
+      <h2>Qué hace cada línea</h2>
+      <ul class="expl">
+<li><code>.block { display: block; }</code> El elemento ocupa el 100% del ancho disponible y el siguiente elemento baja a otra línea. Es el valor por defecto de <code>div</code>, <code>p</code>, <code>h1</code>, <code>section</code>...</li>
+<li><code>.inline { display: inline; }</code> El elemento se comporta como una palabra más del texto. Fíjate en que <code>width: 300px</code> y <code>height: 80px</code> no hacen nada: inline los ignora. Es el valor por defecto de <code>span</code>, <code>a</code>, <code>strong</code>.</li>
+<li><code>.inline-block</code> Lo mejor de los dos: se queda en la línea como inline, pero sí respeta ancho, alto y márgenes verticales. Útil para botones o etiquetas.</li>
+<li><code>display: none</code> El elemento desaparece y no ocupa espacio. Pruébalo con la caja rosa: el texto de alrededor se junta.</li>
+<li><code>Idea clave</code> Todo lo que veremos después (<code>flex</code> y <code>grid</code>) son simplemente otros valores de esta misma propiedad <code>display</code>.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+// ===== Script de la demo: solo sirve para cambiar valores con botones =====
+// El ejemplo funciona igual sin este script: todo el layout es CSS puro.
+const CONTROLES = [{"sel": ".prueba", "prop": "display", "valores": ["block", "inline", "inline-block", "none"]}];
+document.getElementById('codigo-html').textContent = document.getElementById('demo-html').innerHTML.trim().replace(/^ {6}/gm, '');
+document.getElementById('codigo-css').textContent = document.getElementById('demo').textContent.trim().replace(/^ {2}/gm, '');
+const caja = document.getElementById('controles');
+const ahora = document.getElementById('ahora');
+function pinta(c, v) {
+  ahora.textContent = c.tipo === 'clase' ? '<div class="' + c.base + ' ' + v + '">' : c.sel + ' { ' + c.prop + ': ' + v + '; }';
+}
+CONTROLES.forEach(c => {
+  const fila = document.createElement('div'); fila.className = 'controles';
+  fila.innerHTML = '<span class="etq">' + (c.tipo === 'clase' ? 'clase' : c.prop) + '</span>';
+  c.valores.forEach((v, i) => {
+    const b = document.createElement('button'); b.textContent = v;
+    if (i === (c.inicial || 0)) b.classList.add('activo');
+    b.onclick = () => {
+      document.querySelectorAll(c.sel).forEach(el => {
+        if (c.tipo === 'clase') { c.valores.forEach(x => el.classList.remove(x)); el.classList.add(v); }
+        else el.style.setProperty(c.prop, v);
+      });
+      fila.querySelectorAll('button').forEach(x => x.classList.remove('activo'));
+      b.classList.add('activo'); pinta(c, v);
+    };
+    fila.appendChild(b);
+  });
+  caja.appendChild(fila);
+});
+if (CONTROLES.length) { const c = CONTROLES[0]; pinta(c, c.valores[c.inicial || 0]); } else { ahora.style.display = 'none'; }
+</script>
+</body>
+</html>

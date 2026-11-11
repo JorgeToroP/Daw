@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>08. Caso real: barra de navegación + tarjetas con Flexbox</title>
+<style>
+  /* ===== Estilos de la página de demostración (NO forman parte del ejemplo) ===== */
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #1f2937; background: #fff; }
+  .pagina { max-width: 1150px; margin: 0 auto; padding: 28px 24px 60px; }
+  .cabecera h1 { font-size: 30px; margin: 0 0 6px; }
+  .cabecera .num { display: inline-block; background: #1f2937; color: #fff; border-radius: 6px; padding: 2px 10px; font-size: 14px; margin-bottom: 10px; }
+  .cabecera p { font-size: 17px; line-height: 1.5; margin: 6px 0 0; color: #374151; max-width: 900px; }
+  .panel { margin-top: 22px; }
+  .panel h2 { font-size: 18px; margin: 0 0 10px; color: #111827; }
+  .controles { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0 4px; }
+  .controles .etq { font-family: ui-monospace, Consolas, monospace; font-size: 14px; color: #6b7280; margin-right: 4px; min-width: 150px; }
+  .controles button { font: 600 14px ui-monospace, Consolas, monospace; border: 1.5px solid #d1d5db; background: #fff; color: #1f2937; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  .controles button:hover { border-color: #7048e8; }
+  .controles button.activo { background: #7048e8; border-color: #7048e8; color: #fff; }
+  .ahora { font: 15px ui-monospace, Consolas, monospace; background: #f3f0ff; color: #5f3dc4; padding: 8px 12px; border-radius: 8px; display: inline-block; margin: 8px 0 14px; }
+  .escena { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 14px; background: #fafafa; }
+  .dos { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px; margin-top: 26px; }
+  @media (max-width: 900px) { .dos { grid-template-columns: 1fr; } }
+  pre { margin: 0; background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px 16px; font: 14px/1.55 ui-monospace, Consolas, monospace; overflow: auto; white-space: pre-wrap; }
+  .expl { list-style: none; padding: 0; margin: 0; }
+  .expl li { padding: 10px 0; border-bottom: 1px solid #f1f3f5; font-size: 15.5px; line-height: 1.5; }
+  .expl code, .cabecera code { font-family: ui-monospace, Consolas, monospace; background: #fff4e6; color: #d9480f; padding: 1px 6px; border-radius: 5px; font-size: 14px; }
+  .volver { display: inline-block; margin-bottom: 14px; color: #7048e8; text-decoration: none; font-weight: 600; }
+</style>
+<style id="demo">
+  .nav {
+    display: flex;
+    align-items: center;          /* logo, enlaces y botón centrados en vertical */
+    gap: 24px;
+    padding: 14px 24px;
+    background: #1f2937;
+    border-radius: 12px;
+  }
+  .logo { color: white; font: 800 22px system-ui; }
+  .nav a { color: #d1d5db; text-decoration: none; font-weight: 600; }
+  .boton { margin-left: auto; background: #f59f00; color: #1f2937; padding: 8px 16px; border-radius: 8px; font-weight: 700; }
+
+  .hero {
+    display: flex;
+    flex-direction: column;       /* título y texto uno debajo del otro */
+    align-items: center;          /* centrados en horizontal (¡el eje cruzado ahora es horizontal!) */
+    padding: 40px 20px;
+  }
+  .hero h2 { font-size: 36px; margin: 0 0 8px; }
+
+  .tarjetas { display: flex; gap: 16px; }
+  .tarjeta { flex: 1; padding: 20px; border-radius: 12px; color: white; }
+  .t1 { background: #e8590c; } .t2 { background: #0ca678; } .t3 { background: #7048e8; }
+</style>
+</head>
+<body>
+<div class="pagina">
+  <a class="volver" href="index.html">&larr; Todos los ejemplos</a>
+  <div class="cabecera">
+    <span class="num">Ejemplo 08</span>
+    <h1>Caso real: barra de navegación + tarjetas con Flexbox</h1>
+    <p>Juntamos lo visto: una cabecera con logo a la izquierda y menú a la derecha, un bloque central centrado y tres tarjetas de la misma altura. Todo con Flexbox.</p>
+  </div>
+
+  <div class="panel">
+    <h2>Pruébalo: pulsa los botones y mira qué cambia</h2>
+    <div id="controles"></div>
+    <div class="ahora" id="ahora"></div>
+    <div id="demo-html">
+      <nav class="nav">
+        <span class="logo">MiWeb</span>
+        <a href="#">Inicio</a>
+        <a href="#">Cursos</a>
+        <a href="#">Contacto</a>
+        <span class="boton">Entrar</span>
+      </nav>
+      <section class="hero">
+        <h2>Aprende layout CSS</h2>
+        <p>Flexbox para filas y columnas, Grid para cuadrículas.</p>
+      </section>
+      <div class="tarjetas">
+        <div class="tarjeta t1"><h3>Flex</h3><p>Una dimensión.</p></div>
+        <div class="tarjeta t2"><h3>Grid</h3><p>Dos dimensiones: filas y columnas a la vez, con huecos entre ellas.</p></div>
+        <div class="tarjeta t3"><h3>Ambos</h3><p>Se combinan.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dos">
+    <div>
+      <h2>El CSS del ejemplo (exactamente el que se está aplicando)</h2>
+      <pre id="codigo-css"></pre>
+      <h2 style="margin-top:18px">El HTML</h2>
+      <pre id="codigo-html"></pre>
+    </div>
+    <div>
+      <h2>Qué hace cada línea</h2>
+      <ul class="expl">
+<li><code>.nav { display: flex; align-items: center }</code> Logo, enlaces y botón en fila y centrados verticalmente aunque tengan tamaños de letra distintos.</li>
+<li><code>.boton { margin-left: auto }</code> El truco más útil de la barra: un margen automático se come todo el espacio libre y empuja el botón al extremo derecho. Pulsa <code>0</code> para ver cómo vuelve junto a los enlaces.</li>
+<li><code>.hero { flex-direction: column; align-items: center }</code> Con <code>column</code> el eje principal es vertical y el transversal horizontal. Por eso aquí <code>align-items: center</code> centra en HORIZONTAL.</li>
+<li><code>.tarjeta { flex: 1 }</code> Las tres tarjetas miden lo mismo de ancho.</li>
+<li><code>align-items: stretch</code> Las tres tarjetas tienen la misma altura aunque la verde tenga más texto. Con float esto era casi imposible. Pulsa <code>flex-start</code> para ver la diferencia.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+// ===== Script de la demo: solo sirve para cambiar valores con botones =====
+// El ejemplo funciona igual sin este script: todo el layout es CSS puro.
+const CONTROLES = [{"sel": ".boton", "prop": "margin-left", "valores": ["auto", "0"]}, {"sel": ".tarjetas", "prop": "align-items", "valores": ["stretch", "flex-start"]}];
+document.getElementById('codigo-html').textContent = document.getElementById('demo-html').innerHTML.trim().replace(/^ {6}/gm, '');
+document.getElementById('codigo-css').textContent = document.getElementById('demo').textContent.trim().replace(/^ {2}/gm, '');
+const caja = document.getElementById('controles');
+const ahora = document.getElementById('ahora');
+function pinta(c, v) {
+  ahora.textContent = c.tipo === 'clase' ? '<div class="' + c.base + ' ' + v + '">' : c.sel + ' { ' + c.prop + ': ' + v + '; }';
+}
+CONTROLES.forEach(c => {
+  const fila = document.createElement('div'); fila.className = 'controles';
+  fila.innerHTML = '<span class="etq">' + (c.tipo === 'clase' ? 'clase' : c.prop) + '</span>';
+  c.valores.forEach((v, i) => {
+    const b = document.createElement('button'); b.textContent = v;
+    if (i === (c.inicial || 0)) b.classList.add('activo');
+    b.onclick = () => {
+      document.querySelectorAll(c.sel).forEach(el => {
+        if (c.tipo === 'clase') { c.valores.forEach(x => el.classList.remove(x)); el.classList.add(v); }
+        else el.style.setProperty(c.prop, v);
+      });
+      fila.querySelectorAll('button').forEach(x => x.classList.remove('activo'));
+      b.classList.add('activo'); pinta(c, v);
+    };
+    fila.appendChild(b);
+  });
+  caja.appendChild(fila);
+});
+if (CONTROLES.length) { const c = CONTROLES[0]; pinta(c, c.valores[c.inicial || 0]); } else { ahora.style.display = 'none'; }
+</script>
+</body>
+</html>

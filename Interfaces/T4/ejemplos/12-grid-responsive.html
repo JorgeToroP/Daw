@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12. Galería responsive sin media queries: auto-fit + minmax()</title>
+<style>
+  /* ===== Estilos de la página de demostración (NO forman parte del ejemplo) ===== */
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #1f2937; background: #fff; }
+  .pagina { max-width: 1150px; margin: 0 auto; padding: 28px 24px 60px; }
+  .cabecera h1 { font-size: 30px; margin: 0 0 6px; }
+  .cabecera .num { display: inline-block; background: #1f2937; color: #fff; border-radius: 6px; padding: 2px 10px; font-size: 14px; margin-bottom: 10px; }
+  .cabecera p { font-size: 17px; line-height: 1.5; margin: 6px 0 0; color: #374151; max-width: 900px; }
+  .panel { margin-top: 22px; }
+  .panel h2 { font-size: 18px; margin: 0 0 10px; color: #111827; }
+  .controles { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0 4px; }
+  .controles .etq { font-family: ui-monospace, Consolas, monospace; font-size: 14px; color: #6b7280; margin-right: 4px; min-width: 150px; }
+  .controles button { font: 600 14px ui-monospace, Consolas, monospace; border: 1.5px solid #d1d5db; background: #fff; color: #1f2937; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  .controles button:hover { border-color: #7048e8; }
+  .controles button.activo { background: #7048e8; border-color: #7048e8; color: #fff; }
+  .ahora { font: 15px ui-monospace, Consolas, monospace; background: #f3f0ff; color: #5f3dc4; padding: 8px 12px; border-radius: 8px; display: inline-block; margin: 8px 0 14px; }
+  .escena { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 14px; background: #fafafa; }
+  .dos { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px; margin-top: 26px; }
+  @media (max-width: 900px) { .dos { grid-template-columns: 1fr; } }
+  pre { margin: 0; background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px 16px; font: 14px/1.55 ui-monospace, Consolas, monospace; overflow: auto; white-space: pre-wrap; }
+  .expl { list-style: none; padding: 0; margin: 0; }
+  .expl li { padding: 10px 0; border-bottom: 1px solid #f1f3f5; font-size: 15.5px; line-height: 1.5; }
+  .expl code, .cabecera code { font-family: ui-monospace, Consolas, monospace; background: #fff4e6; color: #d9480f; padding: 1px 6px; border-radius: 5px; font-size: 14px; }
+  .volver { display: inline-block; margin-bottom: 14px; color: #7048e8; text-decoration: none; font-weight: 600; }
+</style>
+<style id="demo">
+  .galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    width: 100%;                     /* lo cambias con los botones para simular pantallas */
+    transition: width .4s;
+  }
+
+  .tarjeta { height: 140px; border-radius: 14px; color: white; font: bold 22px system-ui; display: grid; place-items: center; }
+  .tarjeta:nth-child(1) { background: #e8590c; }
+  .tarjeta:nth-child(2) { background: #0ca678; }
+  .tarjeta:nth-child(3) { background: #7048e8; }
+  .tarjeta:nth-child(4) { background: #d6336c; }
+</style>
+</head>
+<body>
+<div class="pagina">
+  <a class="volver" href="index.html">&larr; Todos los ejemplos</a>
+  <div class="cabecera">
+    <span class="num">Ejemplo 12</span>
+    <h1>Galería responsive sin media queries: auto-fit + minmax()</h1>
+    <p>Una sola línea de CSS hace que la galería tenga tantas columnas como quepan, cada una de al menos 200px. Cambia el ancho del contenedor con los botones (o la ventana) y mira cómo se reorganiza.</p>
+  </div>
+
+  <div class="panel">
+    <h2>Pruébalo: pulsa los botones y mira qué cambia</h2>
+    <div id="controles"></div>
+    <div class="ahora" id="ahora"></div>
+    <div id="demo-html">
+      <div class="galeria">
+        <div class="tarjeta">1</div>
+        <div class="tarjeta">2</div>
+        <div class="tarjeta">3</div>
+        <div class="tarjeta">4</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dos">
+    <div>
+      <h2>El CSS del ejemplo (exactamente el que se está aplicando)</h2>
+      <pre id="codigo-css"></pre>
+      <h2 style="margin-top:18px">El HTML</h2>
+      <pre id="codigo-html"></pre>
+    </div>
+    <div>
+      <h2>Qué hace cada línea</h2>
+      <ul class="expl">
+<li><code>minmax(200px, 1fr)</code> Cada columna mide como mínimo 200px y como máximo 1fr (una parte del espacio libre).</li>
+<li><code>repeat(auto-fit, ...)</code> En lugar de un número fijo, "todas las columnas que quepan". Con el contenedor a 420px caben 2; a 650px caben 3; a pantalla completa caben 4 y se estiran.</li>
+<li><code>auto-fill vs auto-fit</code> Con pantalla ancha, <code>auto-fill</code> deja columnas vacías reservadas si sobran huecos; <code>auto-fit</code> las colapsa y estira las tarjetas existentes. Compáralos con el ancho al 100%.</li>
+<li><code>repeat(4, 1fr)</code> Para comparar: cuatro columnas fijas que se aplastan a 420px. Por eso auto-fit es mejor para galerías.</li>
+<li><code>place-items: center</code> Dentro de cada tarjeta usamos grid para centrar el número: es la versión grid del centrado perfecto (en una sola línea).</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+// ===== Script de la demo: solo sirve para cambiar valores con botones =====
+// El ejemplo funciona igual sin este script: todo el layout es CSS puro.
+const CONTROLES = [{"sel": ".galeria", "prop": "width", "valores": ["100%", "650px", "420px"]}, {"sel": ".galeria", "prop": "grid-template-columns", "valores": ["repeat(auto-fit, minmax(200px, 1fr))", "repeat(auto-fill, minmax(200px, 1fr))", "repeat(4, 1fr)"]}];
+document.getElementById('codigo-html').textContent = document.getElementById('demo-html').innerHTML.trim().replace(/^ {6}/gm, '');
+document.getElementById('codigo-css').textContent = document.getElementById('demo').textContent.trim().replace(/^ {2}/gm, '');
+const caja = document.getElementById('controles');
+const ahora = document.getElementById('ahora');
+function pinta(c, v) {
+  ahora.textContent = c.tipo === 'clase' ? '<div class="' + c.base + ' ' + v + '">' : c.sel + ' { ' + c.prop + ': ' + v + '; }';
+}
+CONTROLES.forEach(c => {
+  const fila = document.createElement('div'); fila.className = 'controles';
+  fila.innerHTML = '<span class="etq">' + (c.tipo === 'clase' ? 'clase' : c.prop) + '</span>';
+  c.valores.forEach((v, i) => {
+    const b = document.createElement('button'); b.textContent = v;
+    if (i === (c.inicial || 0)) b.classList.add('activo');
+    b.onclick = () => {
+      document.querySelectorAll(c.sel).forEach(el => {
+        if (c.tipo === 'clase') { c.valores.forEach(x => el.classList.remove(x)); el.classList.add(v); }
+        else el.style.setProperty(c.prop, v);
+      });
+      fila.querySelectorAll('button').forEach(x => x.classList.remove('activo'));
+      b.classList.add('activo'); pinta(c, v);
+    };
+    fila.appendChild(b);
+  });
+  caja.appendChild(fila);
+});
+if (CONTROLES.length) { const c = CONTROLES[0]; pinta(c, c.valores[c.inicial || 0]); } else { ahora.style.display = 'none'; }
+</script>
+</body>
+</html>
