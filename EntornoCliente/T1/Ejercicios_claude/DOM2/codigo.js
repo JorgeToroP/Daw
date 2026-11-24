@@ -1,22 +1,18 @@
-//getElementById devuelve el elemento que tenga el id que le pasemos
-const s = document.getElementById('saludo');
-console.log(s);
+const titulo = document.getElementById("titulo");
+console.log(titulo);
 
 //innerText devuelve el texto que hay dentro del elemento
-console.log(s.innerText);
+console.log(titulo.innerText);
 
-//query selector devuelve el rpiumero que coincida con el selector
-console.log(document.querySelector('.nota').innerText); //7
+//query selector devuelve el primero que coincida con el selector
+console.log(document.querySelector('.precio').innerText); //10 €
 
 //querySelectorAll devuelve todos los elementos que coincidan con el selector
-const notas = document.querySelectorAll('.nota');
-console.log(notas.length); //NodeList(3) [li.nota, li.nota, li.nota]
+const precios = document.querySelectorAll('.precio');
 
-//buscar algo que no existe devuelve null
-console.log(document.getElementById('#nada')); //null
+console.log(document.getElementById('nada')); //null
 
-//funcion que se ejecuta cuando se hace click en el boton
-function cambiar() {
-    s.innerText = "esto lo metimos en la constante s y la llamamos con la funcion cambiar"; //cambia el texto del elemento con id saludo
+function cambiarTitulo() {
+    titulo.innerText = "Estos sonn los cambios con innerText que se hacen con la funcion cambiarTitulo"; //cambia el texto del elemento con id titulo
 }
 
