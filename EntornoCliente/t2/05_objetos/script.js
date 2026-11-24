@@ -9,4 +9,4 @@ document.getElementById("resultado").innerHTML =
   "Edad: " + alumno.edad + "<br>" +
   "Curso: " + alumno.curso + " " +
   typeof alumno;
-  ;
+;

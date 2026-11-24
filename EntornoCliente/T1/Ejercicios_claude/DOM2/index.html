@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <h1 id="titulo">Tienda</h1>
     <p class="precio">10 €</p>
     <p class="precio">20 €</p>
-    <button onclick="cambiarTitulo()" id="btn">Comprar</button>
+    <button onclick="cambiarTitulo()" id="btn">Cambiar</button>
+
+    <p onmouseover="cambiarTexto()" id="pasarRaton">
+        Pasa el ratón
+    </p>
+
+
+    <select onchange="mostrarOpcion()" id="select">
+        <option>HTML</option>
+        <option>CSS</option>
+    </select>
 
     <script src="codigo.js"></script>
 </body>
+
 </html>
