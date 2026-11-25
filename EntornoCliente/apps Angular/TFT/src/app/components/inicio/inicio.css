@@ -1,0 +1,23 @@
+.tarjeta {
+    border: 2px solid #c8102e;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    max-width: 400px;
+    
+}
+
+h2 {
+    color: #c8102e;
+    border-bottom: 2px solid #c8102e;
+    border-radius: 4px;
+    padding-bottom: 4px;
+}
+
+#navigation-links {
+    margin-top: 16px;
+    border-top: 1px solid #c8102e;
+    border-radius: 4px;
+    padding-top: 8px;
+    
+}
