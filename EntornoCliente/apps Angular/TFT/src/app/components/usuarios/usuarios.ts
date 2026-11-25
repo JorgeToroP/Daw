@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  imports: [],
+  imports: [CommonModule],
   selector: 'app-usuarios',
   styleUrl: './usuarios.css',
   templateUrl: './usuarios.html',
