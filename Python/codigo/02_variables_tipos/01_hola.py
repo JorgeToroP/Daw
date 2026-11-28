@@ -17,3 +17,12 @@ print(Cesar69)
 nombre="Jorge Toro Pineda"
 print(nombre)
 print("mi nombre es " + nombre )
+
+
+print(5 / 2)
+print(5 // 2)
+print(10 // 3)
+print(type(6 / 3))
+print(-7 // 2)
+nombre = "Python"
+print(f"{nombre} tiene {len(nombre)} letras")
